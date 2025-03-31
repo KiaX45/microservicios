@@ -9,4 +9,13 @@ export class CreateCategoryDto {
     description?:string;
 }
 
+//Example of body request
+/*
+{
+    "name": "Category 1",
+    "description": "Description of category 1"
+}
+
+*/
+
 
