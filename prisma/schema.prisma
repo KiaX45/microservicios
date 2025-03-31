@@ -26,7 +26,7 @@ model User {
   favorites Favorite[]     // Relación con Favorite de uno a muchos un usuario puede tener muchos favoritos
 }
 
-model Categorie {
+model Category {
   id          String    @id @default(uuid())
   name        String
   description String?
@@ -43,7 +43,7 @@ model Product {
   stock       Int
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  categorie   Categorie @relation(fields: [categorieId], references: [id])
+  categorie   Category @relation(fields: [categorieId], references: [id])
   categorieId String
   imgUrl      String?
   reviews     Review[]  // Relación con Review de uno a muchos un producto puede tener muchos reviews
