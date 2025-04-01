@@ -2,12 +2,17 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateFavoriteDto } from './dto/create-favorite.dto';
 import { UpdateFavoriteDto } from './dto/update-favorite.dto';
 import { PrismaService } from 'src/prisma.service';
+import { UsersService } from 'src/users/users.service';
+import { ProductsService } from 'src/products/products.service';
 import { Favorite } from '@prisma/client'; //importamos el modelo de usuario de prisma
 import {v4 as uuidV4 } from 'uuid' //importamos la libreria uuid para generar ids unicos
 @Injectable()
 export class FavoritesService {
 
-  constructor(private prisma: PrismaService) {} //inicializamos el servicio de prisma en el constructor
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly productsService: ProductsService,
+    private prisma: PrismaService) {} //inicializamos el servicio de prisma en el constructor
 
   async getFavorites() {
     return this.prisma.favorite.findMany(); //buscamos todos los registros de la tabla favorite
@@ -23,6 +28,12 @@ export class FavoritesService {
       id,
       createdAt,
     }
+    //verificamos si existe el producto en la base de datos
+    await this.productsService.findOne(createFavoriteDto.product_id);
+    //verificamos si existe el usuario en la base de datos
+    await this.usersService.findOne(createFavoriteDto.user_id);
+
+
     const newFavorite = await this.prisma.favorite.create({
       data: favorite,
     });
