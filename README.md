@@ -80,14 +80,38 @@ docker compose build #Construye las imágenes sin ejecutarlas
 #### Delete Categories
 ![Categories](Endpoints_images/Delete_Categories.png)
 ### Reviews
-![Categories](Endpoints_images/Categories.png)
-#### Post Categories
-![Categories](Endpoints_images/Post_Categories.png)
-#### Get Categories
-![Categories](Endpoints_images/Get_Categories.png)
-#### Get Categories by id
-![Categories](Endpoints_images/Get_Categories_by_id.png)
-#### Patch Categories
-![Categories](Endpoints_images/Patch_Categories.png)
-#### Delete Categories
-![Categories](Endpoints_images/Delete_Categories.png)
+![Reviews](Endpoints_images/Reviews.png)
+#### Post Reviews
+![Reviews](Endpoints_images/Post_Reviews.png)
+#### Get Reviews
+![Reviews](Endpoints_images/Get_Reviews.png)
+#### Get Reviews by id
+![Reviews](Endpoints_images/Get_Reviews_by_id.png)
+#### Patch Reviews
+![Reviews](Endpoints_images/Patch_Reviews.png)
+#### Delete Reviews
+![Reviews](Endpoints_images/Delete_Reviews.png)
+### CustomerDebts
+![CustomerDebts](Endpoints_images/CustomerDebts.png)
+#### Post CustomerDebts
+![CustomerDebts](Endpoints_images/Post_CustomerDebts.png)
+#### Get CustomerDebts
+![CustomerDebts](Endpoints_images/Get_CustomerDebts.png)
+#### Get CustomerDebts by id
+![CustomerDebts](Endpoints_images/Get_CustomerDebts_by_id.png)
+#### Patch CustomerDebts
+![CustomerDebts](Endpoints_images/Patch_CustomerDebts.png)
+#### Delete CustomerDebts
+![CustomerDebts](Endpoints_images/Delete_CustomerDebts.png)
+### Favorites
+![Favorites](Endpoints_images/Favorites.png)
+#### Post Favorites
+![Favorites](Endpoints_images/Post_Favorites.png)
+#### Get Favorites
+![Favorites](Endpoints_images/Get_Favorites.png)
+#### Get Favorites by id
+![Favorites](Endpoints_images/Get_Favorites_by_id.png)
+#### Patch Favorites
+![Favorites](Endpoints_images/Patch_Favorites.png)
+#### Delete Favorites
+![Favorites](Endpoints_images/Delete_Favorites.png)
