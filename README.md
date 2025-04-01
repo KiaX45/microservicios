@@ -15,9 +15,15 @@ Este proyecto es una aplicación de e-commerce desarrollada con **NestJS**, util
 - **Módulo de Favoritos (`favorites/`)**: Organización de productos favoritos para cada usuario.  
 - **Gestión de deudas de clientes (`customer-debts/`)**: Módulo para registrar y gestionar deudas asociadas a clientes.  
 
+## Base de datos
+![Database](Endpoints_images/Database.png)
+Enlace de visualización: https://drawsql.app/teams/udenar-1/diagrams/microservicios
 ## Instrucciones de Despliegue
 
 ```bash
+#IMPORTANTE 
+En el archivo start.sh seleccionar el end of line sequence en LF antes de ejecutar todo
+
 #Instalacion de modulos
 $ npm install
 
@@ -40,6 +46,7 @@ $ npm run start:prod
 docker compose up --build #Construye las imágenes y levanta los contenedores
 docker compose down #Detiene y elimina los contenedores en ejecución
 docker compose build #Construye las imágenes sin ejecutarlas
+
 
 ```
 ## ENDPOINTS
