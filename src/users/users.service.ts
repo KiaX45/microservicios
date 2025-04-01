@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma.service'; //para establecer la conexión con la base de datos
@@ -17,6 +17,16 @@ export class UsersService {
     const id = uuidV4()
     const createdAt = new Date()
     const updatedAt = new Date()
+    //comprobamos si el correo ya existe en la base de datos
+    const userExists = await this.prisma.user.findUnique({
+      where: { email: createUserDto.email },
+    });
+    //si existe el usuario lanzamos una excepción
+    if (userExists) {
+      throw new ConflictException(`User with email ${createUserDto.email} already exists`);
+    }
+    
+    
     //Creamos un nuevo objeto de usuario con los datos que nos llegan por el dto y los campos que nos faltan
     const user = {
       ...createUserDto,

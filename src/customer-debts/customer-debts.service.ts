@@ -74,7 +74,7 @@ export class CustomerDebtsService {
       },
     });
     //actualizamos el registro con los nuevos datos
-    return customerDebt; //retornamos el registro actualizado
+    return updatedCustomerDebt; //retornamos el registro actualizado
   }
 
   async delete(id: string) :Promise<CustomerDebt> {

@@ -17,3 +17,14 @@ export class CreateCustomerDebtDto {
   @IsString()
   condition?: string; // Estado de la deuda (opcional, por defecto "pendiente")
 }
+
+/* 
+Body example:
+{
+  "user_id": "ed0bbb21-0373-4f08-a390-3b3f78687a97",
+  "description": "Deuda por servicio de internet",
+  "amount": 150.00,
+  "condition": "pendiente"
+}
+
+*/
