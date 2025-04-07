@@ -7,6 +7,7 @@ import { ProductsService } from 'src/products/products.service';
 import { CategoriesService } from 'src/categories/categories.service';
 
 
+
 @Module({
   controllers: [FavoritesController],
   providers: [FavoritesService, PrismaService, UsersService, ProductsService, CategoriesService],

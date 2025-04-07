@@ -4,7 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma.service'; //para establecer la conexión con la base de datos
 import { User } from '@prisma/client'; //importamos el modelo de usuario de prisma
 import {v4 as uuidV4 } from 'uuid'
-import { NotFoundError } from 'rxjs';
+
 
 
 @Injectable()
@@ -97,4 +97,5 @@ export class UsersService {
     //retornamos un mensaje de éxito
     return `User with id ${id} deleted successfully`;
   }
+
 }
