@@ -1,4 +1,3 @@
-
 services:
   postgres:
     image: postgres:latest
@@ -9,7 +8,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432" # el externo es 5433, el interno es 5432
+      - "5432:5432"
+    networks:
+      - app-network
 
   app:
     build:
@@ -25,16 +26,54 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
       - JWT_SECRET=${JWT_SECRET}
+      - KEYCLOAK_URL=http://keycloak:8080
+      - KEYCLOAK_REALM=nestjs-realm
+      - KEYCLOAK_CLIENT_ID=nestjs-app
+      - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
     ports:
-      - "3000:3000" # el externo es 8000, el interno es 8000
+      - "3000:3000"
     depends_on:
       - postgres
+      - keycloak
+    networks:
+      - app-network
+
+  keycloak-db:
+    image: postgres:latest  # Cambiado a latest para usar la versión más reciente
+    container_name: keycloak_postgres
+    environment:
+      - POSTGRES_DB=keycloak
+      - POSTGRES_USER=keycloak_user
+      - POSTGRES_PASSWORD=${KEYCLOAK_DB_PASSWORD}
+      - POSTGRES_HOST_AUTH_METHOD=trust  # Para solucionar el problema de autenticación
+    volumes:
+      - keycloak_postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - app-network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest  # También podemos usar la última versión de Keycloak
+    container_name: keycloak
+    environment:
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://keycloak-db:5432/keycloak
+      - KC_DB_USERNAME=keycloak_user
+      - KC_DB_PASSWORD=${KEYCLOAK_DB_PASSWORD}
+      - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
+    command: start-dev
+    ports:
+      - "8080:8080"
+    depends_on:
+      - keycloak-db
+    networks:
+      - app-network
+
+networks:
+  app-network:
 
 volumes:
   postgres_data:
-
-      
-
-
-    
-   
+  keycloak_postgres_data:
