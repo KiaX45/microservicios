@@ -6,7 +6,10 @@ import { envs } from './config/envs';
 
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // Al inicio de tu bootstrap function
+const app = await NestFactory.create(AppModule, {
+  logger: ['error', 'warn', 'log', 'debug'], // Esto permitirá ver logs de depuración
+});
 
   app.setGlobalPrefix('api'); //basicamente, adiciona o prefixo 'api' a todas as rutas
   //Configuración de Swagger
@@ -27,6 +30,12 @@ async function bootstrap() {
     forbidNonWhitelisted: true,
     })
    );
+
+   app.enableCors({
+    origin: 'http://localhost:8080', // URL de tu Keycloak
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
    
   await app.listen(envs.port ?? 3000);
 
