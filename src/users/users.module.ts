@@ -8,7 +8,7 @@ import { ConfigService } from '@nestjs/config';
 
 @Module({
   controllers: [UsersController],
-  providers: [UsersService, PrismaService, ConfigService, KeycloakUserGeneratorService], 
+  providers: [UsersService, PrismaService, ConfigService, KeycloakUserGeneratorService, ], 
   exports: [UsersService, PrismaService], // Exportar el servicio de usuarios y PrismaService para que puedan ser utilizados en otros módulos
 })
 export class UsersModule {}

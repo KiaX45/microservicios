@@ -6,20 +6,23 @@ import { User } from '@prisma/client'; //importamos el modelo de usuario de pris
 import { KeycloakAuthGuard } from 'src/keyCloak/keycloak-auth.guard';
 import { Roles } from 'src/keyCloak/role.decorator';
 import { RolesGuard } from 'src/keyCloak/keycloak-roles.guard';
+import { Protect } from 'src/keyCloak/protect.decorator';
 
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  //@UseGuards(KeycloakAuthGuard, RolesGuard)
-  //@Roles('admin')
+  @UseGuards(KeycloakAuthGuard, RolesGuard)
+  @Protect()
+  @Roles('admin')
   @Post('createUser')
   async create(@Body() createUserDto: CreateUserDto) :Promise<User> {
     return this.usersService.createUser(createUserDto);
   }
 
   @UseGuards(KeycloakAuthGuard, RolesGuard)
+  @Protect()
   @Roles('user', 'admin')
   @Get('getUsers')
   async getUsers(): Promise<User[]> {

@@ -1,5 +1,5 @@
 import KeycloakAdminClient from '@keycloak/keycloak-admin-client';
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { envs } from 'src/config/envs';
 import { createUserDtoKeyCloak } from './dto/createUserKeyCloak.dto';
@@ -66,7 +66,7 @@ export class KeycloakUserGeneratorService {
             return user
         } catch (error) {
             this.logger.error('Error creating user in Keycloak', error);
-            throw new Error('Failed to create user in Keycloak');
+            throw new BadRequestException('Failed to create user in Keycloak');
         }
     }
 

@@ -16,7 +16,6 @@ export class UsersService {
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     //los campos que nos faltan son createdAt, updatedAt y id, ya que son generados por prisma
-    const id = uuidV4()
     const createdAt = new Date()
     const updatedAt = new Date()
     //comprobamos si el correo ya existe en la base de datos
@@ -27,13 +26,7 @@ export class UsersService {
     if (userExists) {
       throw new ConflictException(`User with email ${createUserDto.email} already exists`);
     }
-    //Creamos un nuevo objeto de usuario con los datos que nos llegan por el dto y los campos que nos faltan
-    const user = {
-      ...createUserDto,
-      id,
-      createdAt,
-      updatedAt,
-    };
+    
 
     
     //Creamos el usuairo tambien en keycloak
@@ -46,7 +39,17 @@ export class UsersService {
       isTemporaryPassword: false,
     }
 
-    await this.keyCloakService.createUser(userKeyCloak)
+    const userKeyCloakCreated = await this.keyCloakService.createUser(userKeyCloak)
+    //le colocamos el role de user por defecto
+    await this.keyCloakService.assignRolesToUser(userKeyCloakCreated.id, ['user'])
+
+    //Creamos un nuevo objeto de usuario con los datos que nos llegan por el dto y los campos que nos faltan
+    const user = {
+      ...createUserDto,
+      id: userKeyCloakCreated.id,
+      createdAt,
+      updatedAt,
+    };
     
     //Guardamos el nuevo usuario en la base de datos
     const newUser = await this.prisma.user.create({
