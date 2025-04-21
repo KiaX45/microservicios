@@ -16,7 +16,7 @@ datasource db {
 model User {
   id        String         @id @default(uuid())
   //ToDO: poner el nombre como unico
-  name      String?
+  name      String?        @unique
   email     String?        @unique
   password  String?        @db.VarChar(255)
   createdAt DateTime       @default(now())

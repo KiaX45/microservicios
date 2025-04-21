@@ -66,7 +66,9 @@ export class KeycloakUserGeneratorService {
             return user
         } catch (error) {
             this.logger.error('Error creating user in Keycloak', error);
-            throw new BadRequestException('Failed to create user in Keycloak');
+            throw new BadRequestException(
+                error?.responseData?.errorMessage || 'Failed to create user in Keycloak'
+              );              
         }
     }
 
