@@ -4,13 +4,15 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma.service'; //para establecer la conexión con la base de datos
 import { User } from '@prisma/client'; //importamos el modelo de usuario de prisma
 import {v4 as uuidV4 } from 'uuid'
+import { createUserDtoKeyCloak } from './dto/createUserKeyCloak.dto';
+import { KeycloakUserGeneratorService } from 'src/keyCloak/keycloak-user-generator.service';
 
 
 
 @Injectable()
 export class UsersService {
 
-  constructor(private prisma: PrismaService) {} //inicializamos el servicio de prisma en el constructor
+  constructor(private prisma: PrismaService, private readonly keyCloakService: KeycloakUserGeneratorService) {} //inicializamos el servicio de prisma en el constructor
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     //los campos que nos faltan son createdAt, updatedAt y id, ya que son generados por prisma
@@ -25,8 +27,6 @@ export class UsersService {
     if (userExists) {
       throw new ConflictException(`User with email ${createUserDto.email} already exists`);
     }
-    
-    
     //Creamos un nuevo objeto de usuario con los datos que nos llegan por el dto y los campos que nos faltan
     const user = {
       ...createUserDto,
@@ -35,10 +35,24 @@ export class UsersService {
       updatedAt,
     };
 
+    
+    //Creamos el usuairo tambien en keycloak
+    const userKeyCloak: createUserDtoKeyCloak = {
+      username: createUserDto.name,
+      email: createUserDto.email,
+      firstName: createUserDto.name,
+      lastName: createUserDto.name,
+      password: createUserDto.password,
+      isTemporaryPassword: false,
+    }
+
+    await this.keyCloakService.createUser(userKeyCloak)
+    
     //Guardamos el nuevo usuario en la base de datos
     const newUser = await this.prisma.user.create({
       data: user,
     });
+
     return newUser;
   }
 

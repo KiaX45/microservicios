@@ -11,10 +11,11 @@ import { KeyCloakAuthModule } from './keyCloak/keycloak-auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './keyCloak/keycloak-roles.guard';
 import { KeycloakAuthGuard } from './keyCloak/keycloak-auth.guard';
+import { KeycloakUserGeneratorService } from './keyCloak/keycloak-user-generator.service';
 
 @Module({
   imports: [ProductsModule, UsersModule, CategoriesModule, ReviewsModule, CustomerDebtsModule, FavoritesModule, AuthModule, KeyCloakAuthModule],
   controllers: [],
-  providers: [PrismaService, {provide: APP_GUARD, useClass:KeycloakAuthGuard},{provide: APP_GUARD, useClass: RolesGuard}],
+  providers: [PrismaService, { provide: APP_GUARD, useClass: KeycloakAuthGuard }, { provide: APP_GUARD, useClass: RolesGuard }],
 })
-export class AppModule {}
+export class AppModule { }

@@ -12,8 +12,8 @@ import { RolesGuard } from 'src/keyCloak/keycloak-roles.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(KeycloakAuthGuard, RolesGuard)
-  @Roles('admin')
+  //@UseGuards(KeycloakAuthGuard, RolesGuard)
+  //@Roles('admin')
   @Post('createUser')
   async create(@Body() createUserDto: CreateUserDto) :Promise<User> {
     return this.usersService.createUser(createUserDto);

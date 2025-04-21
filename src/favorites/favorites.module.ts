@@ -5,11 +5,13 @@ import { PrismaService } from 'src/prisma.service';
 import { UsersService } from 'src/users/users.service';
 import { ProductsService } from 'src/products/products.service';
 import { CategoriesService } from 'src/categories/categories.service';
+import { ConfigService } from '@nestjs/config';
+import { KeycloakUserGeneratorService } from 'src/keyCloak/keycloak-user-generator.service';
 
 
 
 @Module({
   controllers: [FavoritesController],
-  providers: [FavoritesService, PrismaService, UsersService, ProductsService, CategoriesService],
+  providers: [FavoritesService, PrismaService, UsersService, ProductsService, CategoriesService, ConfigService, KeycloakUserGeneratorService],
 })
 export class FavoritesModule {}

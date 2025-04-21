@@ -3,6 +3,7 @@ import { PassportModule } from '@nestjs/passport';
 import { KeycloakStrategy } from './keycloak.strategy';
 import { KeycloakAuthGuard } from './keycloak-auth.guard';
 import { RolesGuard } from './keycloak-roles.guard';
+import { KeycloakUserGeneratorService } from './keycloak-user-generator.service';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { RolesGuard } from './keycloak-roles.guard';
     KeycloakStrategy,
     KeycloakAuthGuard,
     RolesGuard, // Registrar el RolesGuard como provider
+     // Registrar el KeycloakUserGeneratorService como provider
   ],
   exports: [PassportModule, KeycloakAuthGuard, RolesGuard], // Exportar el guard para usarlo en otros módulos
 })
