@@ -3,7 +3,7 @@ import { PassportModule } from '@nestjs/passport';
 import { KeycloakStrategy } from './keycloak.strategy';
 import { KeycloakAuthGuard } from './keycloak-auth.guard';
 import { RolesGuard } from './keycloak-roles.guard';
-import { KeycloakUserGeneratorService } from './keycloak-user-generator.service';
+
 
 @Module({
   imports: [
